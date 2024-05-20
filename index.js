@@ -91,36 +91,53 @@ class CountDown extends React.Component {
       days: parseInt(until / (60 * 60 * 24), 10),
     };
   };
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1616976189.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2817440561.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:1895728494.
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2301058748.
 
-  updateTimer = () => {
+updateTimer = () => {
     // Don't fetch these values here, because their value might be changed
     // in another thread
+
     // const {lastUntil, until} = this.state;
 
+    // Check if the timer has finished or if it's not running
     if (this.state.lastUntil === this.state.until || !this.props.running) {
       return;
     }
+
+    // Check if the timer has reached 1 or 0
     if (this.state.until === 1 || (this.state.until === 0 && this.state.lastUntil !== 1)) {
+      // Call the onFinish callback if it's defined
       if (this.props.onFinish) {
         this.props.onFinish();
       }
+
+      // Call the onChange callback if it's defined
       if (this.props.onChange) {
         this.props.onChange(this.state.until);
       }
     }
 
+    // Check if the timer has reached 0
     if (this.state.until === 0) {
+      // Reset the timer to 0
       this.setState({lastUntil: 0, until: 0});
     } else {
+      // Call the onChange callback if it's defined
       if (this.props.onChange) {
         this.props.onChange(this.state.until);
       }
+
+      // Update the timer to the next value
       this.setState({
         lastUntil: this.state.until,
         until: Math.max(0, this.state.until - 1)
       });
     }
   };
+
 
   renderDigit = (d) => {
     const {digitStyle, digitTxtStyle, size} = this.props;
